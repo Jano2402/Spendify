@@ -1,17 +1,20 @@
 import { useState } from "react";
 import Modal from "./Modal.tsx";
-import { TransactionData } from "./dashboardTypes.ts";
 import Transaction from "./Transaction.tsx";
+import { TransactionData } from "./dashboardTypes.ts";
 
 function Dashboard() {
   const [modal, setModal] = useState(false);
-  const [datos, setDatos] = useState<TransactionData | null>(null);
+  const [dataList, setDataList] = useState<TransactionData[]>([]);
 
   const openModal = () => setModal(true);
   const closeModal = () => setModal(false);
 
-  const handleDatos = (datosFormulario: TransactionData) => {
-    setDatos(datosFormulario);
+  const handleAddData = (newData: TransactionData) => {
+    setDataList((prevDataList: TransactionData[]) => [
+      ...prevDataList,
+      newData,
+    ]);
   };
 
   return (
@@ -20,8 +23,12 @@ function Dashboard() {
       <p>Transactions</p>
       <button onClick={openModal}>New transaction</button>
       {modal && <div className="modal-background"></div>}
-      <Modal modal={modal} closeModal={closeModal} enviarDatos={handleDatos} />
-      <Transaction transactiondata={datos} />
+      <Modal
+        modal={modal}
+        closeModal={closeModal}
+        enviarDatos={handleAddData}
+      />
+      <Transaction data={dataList} />
     </>
   );
 }

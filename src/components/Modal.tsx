@@ -22,6 +22,7 @@ function Modal({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     enviarDatos(formData);
+    setFormData({ date: "", amount: "", details: "", type: "", toFrom: "" });
     closeModal();
   };
 
@@ -29,7 +30,10 @@ function Modal({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (

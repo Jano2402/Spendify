@@ -1,19 +1,18 @@
 import { TransactionData } from "./dashboardTypes.ts";
 
-function Transaction({
-  transactiondata,
-}: {
-  transactiondata: TransactionData | null;
-}) {
+function Transaction({ data }: { data: TransactionData[] }) {
   return (
     <>
-      {transactiondata ? (
+      {data ? (
         <>
-          <p>{transactiondata?.date}</p>
-          <p>{transactiondata?.amount}</p>
-          <p>{transactiondata?.details}</p>
-          <p>{transactiondata?.type}</p>
-          <p>{transactiondata?.toFrom}</p>
+          {data.map((data, index) => (
+            <p key={index}>
+              {/* Renderizar los datos del formulario en una sola línea */}
+              {Object.entries(data)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(", ")}
+            </p>
+          ))}
         </>
       ) : (
         <></>
